@@ -14,12 +14,17 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import NavigateNext from '@mui/icons-material/NavigateNext';
 
 import LogoWhite from "../../assets/img/SavantWhite.svg"
 import SmallLogo from "../../assets/img/SavantSmall.svg"
+
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import {SchoolRounded, AttachMoneyRounded, Home,PeopleAltRounded, BusinessCenterRounded,WidgetsRounded,ClassRounded,AccountBoxRounded } from '@mui/icons-material';
 import { colors } from '@mui/material';
@@ -55,9 +60,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -95,7 +97,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Dashboard() {
-  const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [ListItems, setListItems] = React.useState([
     {
@@ -128,8 +129,23 @@ export default function Dashboard() {
         icon: <AccountBoxRounded sx={{ color: colors.grey[500] }}  /> 
         },
       ]
-    }
-]);
+    },
+    {
+    title: "CMS",
+    items: [
+      { label: "Website" , 
+      icon: <AttachMoneyRounded sx={{ color: colors.grey[500] }} /> 
+      },
+      { label: "Data",
+      icon: <AccountBoxRounded sx={{ color: colors.grey[500] }}  /> 
+      },
+    ]
+  },
+
+
+
+])
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -143,16 +159,19 @@ export default function Dashboard() {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       {/* SideBar */}
-      <AppBar position="fixed" open={open} elevation={0} sx={{ bgcolor:'white' , color:"black",boxShadow: `0px 15.0287px 11.2932px rgba(18, 18, 18, 0.0221335), 0px 5.94236px 4.46536px rgba(18, 18, 18, 0.0131208);`  }}>
+      <AppBar position="fixed" open={open} variant="outlined" elevation={0} sx={{ bgcolor:'white' , color:"black" }}>
         <Toolbar sx={{ ml: !open ? "55px" : "-10px", transition: "0.5s all" }}>
 
           <IconButton sx={{  p: "10px", color : "#9e9e9e"  ,mr:"5px"}} onClick={open ? handleDrawerClose : handleDrawerOpen} >
                     {open ? <ChevronLeftIcon sx={{ color: "#9e9e9e" }} /> : <ChevronRightIcon sx={{ color : "#9e9e9e"}} />}
                     {/* theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> */}
                 </IconButton>
-                <Typography variant="h6" noWrap component="h2">
-            Mini variant drawer
-          </Typography>
+          <Breadcrumbs sx={{ overflow: "hidden",display: "flex" ,minWidth: "max-content" }} aria-label="breadcrumb">
+            <Link underline="none" color="inherit" href="/">
+              Cordinator
+            </Link>
+            <Typography color="text.primary">Breadcrumbs</Typography>
+        </Breadcrumbs>
         </Toolbar>
       </AppBar>
 
@@ -160,11 +179,20 @@ export default function Dashboard() {
       <Drawer PaperProps={{
         sx: { bgcolor: "#212121", zIndex: "2000"}
       }} variant="permanent" open={open}>
-        <DrawerHeader>
-          <Box sx={{ width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
+        <DrawerHeader sx={{ pb:"10px"}}>
+          <Box sx={{ pt:"10px" ,width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
             <img src={open ? LogoWhite : SmallLogo} alt="Logo"/>
           </Box>
         </DrawerHeader>
+        <Scrollbars
+        autoHide
+        universal={true}
+        autoHideTimeout={400}
+        autoHideDuration={200}
+        renderThumbVertical={() => (
+          <Box sx={{ bgcolor: colors.grey[600] }} ></Box>
+        )}
+        style={{ width: "100%", height: "calc(100% - 80px)" }}>
         <Box>
         <List>
           {
@@ -291,6 +319,8 @@ export default function Dashboard() {
          
         </List>
         </Box>
+        </Scrollbars>
+
       </Drawer>
 
         {/* Main */}
