@@ -5,5 +5,8 @@ html,body,#root {
 }
 * {
     box-sizing: border-box;
+}
 
+.css-h86el7-MuiButtonBase-root-MuiListItemButton-root.Mui-selected {
+    background-color: #424242 !important;
 }

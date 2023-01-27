@@ -1,5 +1,18 @@
 /* Rectangle 1 */
 .FancyBoxShadow {
-background: #FFFFFF;
-box-shadow: 0px 173px 130px rgba(18, 18, 18, 0.06), 0px 63.1478px 47.4521px rgba(18, 18, 18, 0.0390071), 0px 30.6571px 23.0371px rgba(18, 18, 18, 0.0299155), 0px 15.0287px 11.2932px rgba(18, 18, 18, 0.0221335), 0px 5.94236px 4.46536px rgba(18, 18, 18, 0.0131208);
+    animation-name: shadowBox;
+    animation-fill-mode: forwards;
+    animation-duration: 1s;
+    animation-play-state: running;
+    animation-timing-function: ease-in;
+    background: #FFFFFF;
+}
+@keyframes shadowBox {
+    from {
+        box-shadow: 0px 0px 0px rgba(18, 18, 18, 0.06), 0px 0px 0px rgba(18, 18, 18, 0.0390071), 0px 0px 0px rgba(18, 18, 18, 0.0299155), 0px 0px 0px rgba(18, 18, 18, 0.0221335), 0px 0px 0px rgba(18, 18, 18, 0.0131208);
+
+    }
+    to {
+        box-shadow: 0px 173px 130px rgba(18, 18, 18, 0.06), 0px 63.1478px 47.4521px rgba(18, 18, 18, 0.0390071), 0px 30.6571px 23.0371px rgba(18, 18, 18, 0.0299155), 0px 15.0287px 11.2932px rgba(18, 18, 18, 0.0221335), 0px 5.94236px 4.46536px rgba(18, 18, 18, 0.0131208);
+    }
 }
