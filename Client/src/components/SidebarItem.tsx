@@ -1,4 +1,4 @@
-import { Box, Divider, ListItem, colors, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
+import { Box, Divider, ListItem, colors, ListItemButton, ListItemIcon, ListItemText,Tooltip } from "@mui/material"
 
 export default function SidebarItemSmall({ role,open }: {open : boolean, role: { title?:string, items: { label: string, icon: JSX.Element }[]} }) {
   return (
@@ -23,7 +23,8 @@ export default function SidebarItemSmall({ role,open }: {open : boolean, role: {
 
         {
         role.items.map((item,index) => (
-        <ListItem key={index} disablePadding sx={{ display: 'block',color: colors.grey[300],p:"5px 10px" }}>
+          <Tooltip key={index} title={item.label} enterDelay={!open ? 0 : 1000} placement="right-end" >
+              <ListItem disablePadding sx={{ display: 'block',color: colors.grey[300],p:"5px 10px" }}>
         <ListItemButton
             sx={{
             borderRadius: "15px",
@@ -45,6 +46,8 @@ export default function SidebarItemSmall({ role,open }: {open : boolean, role: {
 
         </ListItemButton>
         </ListItem>
+
+          </Tooltip>
 
         ))
         }
