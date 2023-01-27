@@ -10,3 +10,28 @@ html,body,#root {
 .css-h86el7-MuiButtonBase-root-MuiListItemButton-root.Mui-selected {
     background-color: #424242 !important;
 }
+.scrollbar {
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+/* width */
+.scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  /* Track */
+  .scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #424242;
+  }
+  .scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #616161;
+  }
+  
+
+  
