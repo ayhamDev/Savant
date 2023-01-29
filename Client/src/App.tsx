@@ -5,7 +5,6 @@ import Dashboard from "./pages/admin/Dashboard";
 import Login from "./pages/admin/Login";
 
 function App() {
-
   return (
     // Is Allowed means anything( Like Auth Or something ) 
     <BrowserRouter>

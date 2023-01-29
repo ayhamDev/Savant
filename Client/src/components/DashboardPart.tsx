@@ -6,31 +6,25 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import TodoIcon from '@mui/icons-material/ListRounded';
-import NewsIcon from '@mui/icons-material/NewspaperRounded';
-import NotificationsAtiveIcon from '@mui/icons-material/NotificationsActive';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Menu from '@mui/icons-material/Menu';
-import CalendarIcon from '@mui/icons-material/CalendarMonthRounded';
-import CampaignIcon from '@mui/icons-material/Campaign';
 
 import AvatarMenu from "./AvatarMenu"
 import isMobile from 'is-mobile';
 
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
 import SidebarItem from "./SidebarItem"
 
 import LogoWhite from "../assets/img/SavantWhite.svg"
 import SmallLogo from "../assets/img/SavantSmall.svg"
 
-import {SchoolRounded, AttachMoneyRounded, Home,PeopleAltRounded, BusinessCenterRounded,WidgetsRounded,ClassRounded,AccountBoxRounded, Close } from '@mui/icons-material';
-import { Avatar, colors, MenuItem, Tooltip } from '@mui/material';
+import {Home, Close } from '@mui/icons-material';
+import { AppBar, Avatar, colors, MenuItem, SwipeableDrawer, Tooltip } from '@mui/material';
 import { useTheme } from '@emotion/react';
-const drawerWidth = 240;
+const drawerWidth = 250;
 
+const iOS =
+  typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -64,7 +58,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
-const AppBar = styled(MuiAppBar, {
+const AppBarDesktop = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
@@ -99,62 +93,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Dashboard({children}: { children: JSX.Element }) {
-  const [open, setOpen] = React.useState(true);
-  const [ListItems, setListItems] = React.useState([
-    {
-    title: "Coordinator",
-    items: [
-      { label: "Student",
-       icon: <SchoolRounded sx={{ color: colors.grey[500] }}  /> 
-      },
-      { label: "Teacher",
-       icon: <PeopleAltRounded sx={{ color: colors.grey[500] }}  /> 
-      },
-      { label: "Employee",
-       icon: <BusinessCenterRounded sx={{ color: colors.grey[500] }}  /> 
-      },
-      { label: "Major",
-       icon: <WidgetsRounded sx={{ color: colors.grey[500] }}  /> 
-      },
-      { label: "Class",
-       icon: <ClassRounded sx={{ color: colors.grey[500] }}  /> 
-      },
-      ,
-      { label: "Calendar",
-       icon: <CalendarIcon sx={{ color: colors.grey[500] }}  /> 
-      },
-    ]
-    },
-    {
-      title: "Financial",
-      items: [
-        { label: "Income & Expence" , 
-        icon: <AttachMoneyRounded sx={{ color: colors.grey[500] }} /> 
-        },
-        { label: "Human Resources",
-        icon: <AccountBoxRounded sx={{ color: colors.grey[500] }}  /> 
-        },
-      ]
-    },
-    {
-    title: "CMS",
-    items: [
-      { label: "Website" , 
-      icon: <AttachMoneyRounded sx={{ color: colors.grey[500] }} /> 
-      },
-      { label: "News",
-      icon: <NewsIcon sx={{ color: colors.grey[500] }}  /> 
-      },
-      { label: "Announcements",
-      icon: <CampaignIcon sx={{ color: colors.grey[500] }}  /> 
-      },
-    ]
-  },
-
-
-
-])
+export default function Dashboard({children,items}: { children: JSX.Element, items: object[] }) {
+  const [open, setOpen] = React.useState(isMobile() ? false : false);
+  const [ListItems, setListItems] = React.useState(items)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -169,66 +110,134 @@ export default function Dashboard({children}: { children: JSX.Element }) {
     <Box sx={{ display: 'flex',height:"100%" }}>
       {/* SideBar */}
       <CssBaseline />
-      <AppBar position="fixed" open={open} variant="outlined" elevation={0} sx={{ bgcolor:'white' , color:"black" }}>
-        <Toolbar sx={{ justifyContent: "space-between" , ml: !open ? isMobile() ? "55px" : "65px" : "-10px", transition: "0.5s all" }}>
+      { isMobile() ?
+
+        <AppBar variant="outlined" elevation={0} sx={{ bgcolor:'white' , color:"black" }}>
+          <Toolbar sx={{ justifyContent: "space-between"}}>
 
           <IconButton sx={{  p: "10px", color : "#9e9e9e"  ,mr:"5px"}} onClick={open ? handleDrawerClose : handleDrawerOpen} >
-                    {open ? <Close  sx={{ color: "#9e9e9e" }} /> : <Menu sx={{ color : "#9e9e9e"}} />}
-                    {/* theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> */}
-            </IconButton>
-            <AvatarMenu />
-            {/* <Breadcrumbs sx={{ overflow: "hidden",display: "flex" ,minWidth: "max-content" }} aria-label="breadcrumb">
-            <Link underline="none" color="inherit" href="/">
-              Cordinator
-            </Link>
-            <Typography color="text.primary">Breadcrumbs</Typography>
-        </Breadcrumbs> */}
+                      {open ? <Close  sx={{ color: "#9e9e9e" }} /> : <Menu sx={{ color : "#9e9e9e"}} />}
+                      {/* theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> */}
+              </IconButton>
+              <AvatarMenu />
+          </Toolbar>
+        </AppBar>
+          :
+          <AppBarDesktop position="fixed" open={open} variant="outlined" elevation={0} sx={{ bgcolor:'white' , color:"black" }}>
+          <Toolbar sx={{ justifyContent: "space-between" , ml: !open ? isMobile() ? "55px" : "65px" : "-10px", transition: "0.5s all" }}>
+  
+            <IconButton sx={{  p: "10px", color : "#9e9e9e"  ,mr:"5px"}} onClick={open ? handleDrawerClose : handleDrawerOpen} >
+                      {open ? <Close  sx={{ color: "#9e9e9e" }} /> : <Menu sx={{ color : "#9e9e9e"}} />}
+                      {/* theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> */}
+              </IconButton>
+              <AvatarMenu />
+              {/* <Breadcrumbs sx={{ overflow: "hidden",display: "flex" ,minWidth: "max-content" }} aria-label="breadcrumb">
+              <Link underline="none" color="inherit" href="/">
+                Cordinator
+              </Link>
+              <Typography color="text.primary">Breadcrumbs</Typography>
+          </Breadcrumbs> */}
+  
+          </Toolbar>
+        </AppBarDesktop>
+      
+    }
 
-        </Toolbar>
-      </AppBar>
 
       {/* SideBar */}
-      <Drawer PaperProps={{
-        sx: { 
-          zIndex: "999999",
-          background: "radial-gradient(circle at 24.1% 68.8%, rgb(45, 35, 35) 0%, rgb(0, 0, 0) 99.4%);"
-        }
-      }} variant="permanent" open={open}>
-        <DrawerHeader sx={{ pb:"10px"}}>
-          <Box sx={{ pt: isMobile() ? "5px" : "10px"  ,width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
-            <img src={open ? LogoWhite : SmallLogo} alt="Logo"/>
-          </Box>
-        </DrawerHeader>
-        <Box className="scrollbar">
-        <List>
-          {
-            <>
-            <SidebarItem role={{ items: [
-              {
-                label: "Overview",
-                icon: <Home sx={{ color: colors.grey[500] }} />
-              }
-            ]}} open={open} />
+      {
+        isMobile() ?
+        <SwipeableDrawer
+        disableBackdropTransition={!iOS} disableDiscovery={iOS}
+        anchor={"left"}
+        open={open}
+        onClose={() => {setOpen(false)}}
+        onOpen={() =>{setOpen(true)}}
+        PaperProps={{ sx: { background: "radial-gradient(circle at 24.1% 68.8%, rgb(45, 35, 35) 0%, rgb(0, 0, 0) 99.4%);" } }}
+      >
 
+<DrawerHeader sx={{ pb:"10px"}}>
+            <Box sx={{ pt: isMobile() ? "5px" : "10px"  ,width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
+              <img src={open ? LogoWhite : SmallLogo} alt="Logo"/>
+            </Box>
+          </DrawerHeader>
+          <Box className="scrollbar">
+          <List>
+            {
+              
+              <>
               <SidebarItem role={{ items: [
-              {
-                label: "ToDo List",
-                icon: <TodoIcon sx={{ color: colors.grey[500] }} />
-              }
-            ]}} open={open} />
-
-            </>
+                {
+                  label: "Overview",
+                  icon: <Home sx={{ color: colors.grey[500] }} />
+                }
+              ]}} open={open} />
+  
+                <SidebarItem role={{ items: [
+                {
+                  label: "ToDo List",
+                  icon: <TodoIcon sx={{ color: colors.grey[500] }} />
+                }
+              ]}} open={open} />
+  
+              </>
+            }
+         
+            {
+              ListItems.map(role => (
+                <SidebarItem key={role.title} role={role} open={open} />
+              ))
+            }
+  
+          </List>
+          </Box>
+      </SwipeableDrawer>
+        :
+        <Drawer PaperProps={{
+          sx: { 
+            zIndex: "999999",
+            background: "radial-gradient(circle at 24.1% 68.8%, rgb(45, 35, 35) 0%, rgb(0, 0, 0) 99.4%);"
           }
-       
-          {
-            ListItems.map(role => (
-              <SidebarItem key={role.title} role={role} open={open} />
-            ))
-          }
+        }} variant="permanent" open={open}>
+          <DrawerHeader sx={{ pb:"10px"}}>
+            <Box sx={{ pt: isMobile() ? "5px" : "10px"  ,width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
+              <img src={open ? LogoWhite : SmallLogo} alt="Logo"/>
+            </Box>
+          </DrawerHeader>
+          <Box className="scrollbar">
+          <List>
+            {
+              
+              <>
+              <SidebarItem role={{ items: [
+                {
+                  label: "Overview",
+                  icon: <Home sx={{ color: colors.grey[500] }} />
+                }
+              ]}} open={open} />
+  
+                <SidebarItem role={{ items: [
+                {
+                  label: "ToDo List",
+                  icon: <TodoIcon sx={{ color: colors.grey[500] }} />
+                }
+              ]}} open={open} />
+  
+              </>
+            }
+         
+            {
+              ListItems.map(role => (
+                <SidebarItem key={role.title} role={role} open={open} />
+              ))
+            }
+  
+          </List>
+          </Box>
+        </Drawer>
 
-        </List>
-        </Box>
-      </Drawer>
+      }
+
 
         {/* Main */}
       <Box className="scrollbar" component="main" sx={{ flexGrow: 1 , pt: "75px",pb:"5px" ,height: "100%" ,bgcolor:colors.grey[100]}}>
