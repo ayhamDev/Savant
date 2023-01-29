@@ -10,9 +10,13 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import TodoIcon from '@mui/icons-material/ListRounded';
 import NewsIcon from '@mui/icons-material/NewspaperRounded';
-import NotificationsIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsAtiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Menu from '@mui/icons-material/Menu';
 import CalendarIcon from '@mui/icons-material/CalendarMonthRounded';
+import CampaignIcon from '@mui/icons-material/Campaign';
 
+import AvatarMenu from "./AvatarMenu"
 import isMobile from 'is-mobile';
 
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -22,8 +26,8 @@ import SidebarItem from "./SidebarItem"
 import LogoWhite from "../assets/img/SavantWhite.svg"
 import SmallLogo from "../assets/img/SavantSmall.svg"
 
-import {SchoolRounded, AttachMoneyRounded, Home,PeopleAltRounded, BusinessCenterRounded,WidgetsRounded,ClassRounded,AccountBoxRounded, Menu, Close } from '@mui/icons-material';
-import { colors } from '@mui/material';
+import {SchoolRounded, AttachMoneyRounded, Home,PeopleAltRounded, BusinessCenterRounded,WidgetsRounded,ClassRounded,AccountBoxRounded, Close } from '@mui/icons-material';
+import { Avatar, colors, MenuItem, Tooltip } from '@mui/material';
 import { useTheme } from '@emotion/react';
 const drawerWidth = 240;
 
@@ -142,8 +146,8 @@ export default function Dashboard({children}: { children: JSX.Element }) {
       { label: "News",
       icon: <NewsIcon sx={{ color: colors.grey[500] }}  /> 
       },
-      { label: "Notifications",
-      icon: <NotificationsIcon sx={{ color: colors.grey[500] }}  /> 
+      { label: "Announcements",
+      icon: <CampaignIcon sx={{ color: colors.grey[500] }}  /> 
       },
     ]
   },
@@ -151,7 +155,6 @@ export default function Dashboard({children}: { children: JSX.Element }) {
 
 
 ])
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -160,24 +163,27 @@ export default function Dashboard({children}: { children: JSX.Element }) {
     setOpen(false);
   };
 
+
   return (
 
     <Box sx={{ display: 'flex',height:"100%" }}>
       {/* SideBar */}
       <CssBaseline />
       <AppBar position="fixed" open={open} variant="outlined" elevation={0} sx={{ bgcolor:'white' , color:"black" }}>
-        <Toolbar sx={{ ml: !open ? isMobile() ? "55px" : "65px" : "-10px", transition: "0.55s all" }}>
+        <Toolbar sx={{ justifyContent: "space-between" , ml: !open ? isMobile() ? "55px" : "65px" : "-10px", transition: "0.5s all" }}>
 
           <IconButton sx={{  p: "10px", color : "#9e9e9e"  ,mr:"5px"}} onClick={open ? handleDrawerClose : handleDrawerOpen} >
                     {open ? <Close  sx={{ color: "#9e9e9e" }} /> : <Menu sx={{ color : "#9e9e9e"}} />}
                     {/* theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> */}
-                </IconButton>
-          <Breadcrumbs sx={{ overflow: "hidden",display: "flex" ,minWidth: "max-content" }} aria-label="breadcrumb">
+            </IconButton>
+            <AvatarMenu />
+            {/* <Breadcrumbs sx={{ overflow: "hidden",display: "flex" ,minWidth: "max-content" }} aria-label="breadcrumb">
             <Link underline="none" color="inherit" href="/">
               Cordinator
             </Link>
             <Typography color="text.primary">Breadcrumbs</Typography>
-        </Breadcrumbs>
+        </Breadcrumbs> */}
+
         </Toolbar>
       </AppBar>
 
