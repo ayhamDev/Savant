@@ -17,7 +17,7 @@ export default function Login() {
               <Typography variant="h5" component="h1">Log In</Typography>
                 <form action="" style={{ width:"100%" }}>
                   <Box sx={{ marginTop: theme.spacing(4), display:"flex", justifyContent: "center", alignItems:"center" , gap: theme.spacing(3), flexDirection:"column" }}>
-                      <TextField ref={inputName}  type={"text"} required label="Admin Name" variant="outlined" fullWidth />
+                      <TextField ref={inputName}  type={"text"} required label="Name" variant="outlined" fullWidth />
                       <TextField ref={inputPassword} type={"password"} required label="Password" variant="outlined" fullWidth />
                       {/* <Box sx={{ width: "100%" }}>
                         <FormControlLabel control={<Checkbox />} label="Remember Me" />

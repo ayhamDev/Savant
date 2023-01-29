@@ -7,29 +7,29 @@ import Login from "./pages/admin/Login";
 function App() {
 
   return (
+    // Is Allowed means anything( Like Auth Or something ) 
     <BrowserRouter>
       <Routes>
-        <Route path="_/login" element={<Login />}></Route>
-        <Route path="/">
-          {/* The School Website */}
-        </Route>
+        <Route path="login" element={<Login />}></Route>
         <Route element={<RouteGuard isAllowed={true} />}>
           <Route path="_/">
             <Route index element={<Dashboard />}></Route>
           </Route>
           {/* the The Student And teacher dashboard */}
-          <Route element={<RouteGuard isAllowed={false} />}>
+          {/* Check First if the User Is Has the Correct Role */}
+          <Route element={<RouteGuard isAllowed={true} />}> 
             <Route path="/student">
                 {/* Student dashboard */}
+              <Route path="*" element={<Navigate to="/student" replace /> } />
             </Route>
-            <Route path="/teacher">
-                {/* Teacher dashboard */}
-            </Route>
-              
           </Route>
+
+          
         
         </Route>
-        <Route path="*" element={<Navigate to="/" replace /> } />
+
+        <Route path="*" element={<Navigate to="/login" replace /> } />
+
       </Routes>
     </BrowserRouter>
   )
