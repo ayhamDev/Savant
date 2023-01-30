@@ -14,8 +14,8 @@ function App() {
           <Route path="_/">
             <Route index element={<Dashboard />}></Route>
           </Route>
-          {/* the The Student And teacher dashboard */}
-          {/* Check First if the User Is Has the Correct Role */}
+          {/* The Student And teacher dashboard */}
+          {/* Check First if the User Has the Correct Role */}
           <Route element={<RouteGuard isAllowed={true} />}> 
             <Route path="/student">
                 {/* Student dashboard */}

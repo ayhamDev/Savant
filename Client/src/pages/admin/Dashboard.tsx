@@ -1,4 +1,4 @@
-import { SchoolRounded, PeopleAltRounded, BusinessCenterRounded, WidgetsRounded, ClassRounded, AttachMoneyRounded, AccountBoxRounded,CalendarMonth, NewspaperRounded, CampaignRounded } from '@mui/icons-material'
+import { SchoolRounded, PeopleAltRounded, BusinessCenterRounded, WidgetsRounded, ClassRounded, AttachMoneyRounded, AccountBoxRounded,CalendarMonth, NewspaperRounded, CampaignRounded, Home, ListRounded } from '@mui/icons-material'
 import { colors } from '@mui/material'
 import React from 'react'
 import DashboardPart from '../../components/DashboardPart'
@@ -7,6 +7,19 @@ import DashboardPart from '../../components/DashboardPart'
 
 export default function Dashboard() {
   const SideBarItems = [
+    {
+      title: undefined,
+      items: [
+        {
+          label: "Overview",
+          icon: <Home sx={{ color: colors.grey[500] }} />
+        },
+        {
+          label: "ToDo List",
+          icon: <ListRounded sx={{ color: colors.grey[500] }} />
+        }
+      ]
+    },
     {
     title: "Coordinator",
     items: [

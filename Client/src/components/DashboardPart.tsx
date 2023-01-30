@@ -19,7 +19,7 @@ import LogoWhite from "../assets/img/SavantWhite.svg"
 import SmallLogo from "../assets/img/SavantSmall.svg"
 
 import {Home, Close } from '@mui/icons-material';
-import { AppBar, Avatar, colors, MenuItem, SwipeableDrawer, Tooltip } from '@mui/material';
+import { AppBar, Avatar, colors, MenuItem, SwipeableDrawer, Tooltip,Drawer } from '@mui/material';
 import { useTheme } from '@emotion/react';
 const drawerWidth = 250;
 
@@ -76,7 +76,7 @@ const AppBarDesktop = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+const DrawerDesktop = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
@@ -94,7 +94,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Dashboard({children,items}: { children: JSX.Element, items: object[] }) {
-  const [open, setOpen] = React.useState(isMobile() ? false : false);
+  const [open, setOpen] = React.useState(isMobile() ? false : true);
   const [ListItems, setListItems] = React.useState(items)
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -147,16 +147,12 @@ export default function Dashboard({children,items}: { children: JSX.Element, ite
       {/* SideBar */}
       {
         isMobile() ?
-        <SwipeableDrawer
-        disableBackdropTransition={!iOS} disableDiscovery={iOS}
-        anchor={"left"}
+        <Drawer 
         open={open}
         onClose={() => {setOpen(false)}}
-        onOpen={() =>{setOpen(true)}}
         PaperProps={{ sx: { background: "radial-gradient(circle at 24.1% 68.8%, rgb(45, 35, 35) 0%, rgb(0, 0, 0) 99.4%);" } }}
       >
-
-<DrawerHeader sx={{ pb:"10px"}}>
+        <DrawerHeader sx={{ pb:"10px"}}>
             <Box sx={{ pt: isMobile() ? "5px" : "10px"  ,width: "100%", height: "100%", display:"grid", placeItems: "center" }}>
               <img src={open ? LogoWhite : SmallLogo} alt="Logo"/>
             </Box>
@@ -164,36 +160,16 @@ export default function Dashboard({children,items}: { children: JSX.Element, ite
           <Box className="scrollbar">
           <List>
             {
-              
-              <>
-              <SidebarItem role={{ items: [
-                {
-                  label: "Overview",
-                  icon: <Home sx={{ color: colors.grey[500] }} />
-                }
-              ]}} open={open} />
-  
-                <SidebarItem role={{ items: [
-                {
-                  label: "ToDo List",
-                  icon: <TodoIcon sx={{ color: colors.grey[500] }} />
-                }
-              ]}} open={open} />
-  
-              </>
-            }
-         
-            {
               ListItems.map(role => (
-                <SidebarItem key={role.title} role={role} open={open} />
+                <SidebarItem key={role.title ? role.title :  Math.random() * 174183.6 / 32} role={role} open={open} />
               ))
             }
   
           </List>
           </Box>
-      </SwipeableDrawer>
+      </Drawer>
         :
-        <Drawer PaperProps={{
+        <DrawerDesktop PaperProps={{
           sx: { 
             zIndex: "999999",
             background: "radial-gradient(circle at 24.1% 68.8%, rgb(45, 35, 35) 0%, rgb(0, 0, 0) 99.4%);"
@@ -206,41 +182,22 @@ export default function Dashboard({children,items}: { children: JSX.Element, ite
           </DrawerHeader>
           <Box className="scrollbar">
           <List>
-            {
-              
-              <>
-              <SidebarItem role={{ items: [
-                {
-                  label: "Overview",
-                  icon: <Home sx={{ color: colors.grey[500] }} />
-                }
-              ]}} open={open} />
-  
-                <SidebarItem role={{ items: [
-                {
-                  label: "ToDo List",
-                  icon: <TodoIcon sx={{ color: colors.grey[500] }} />
-                }
-              ]}} open={open} />
-  
-              </>
-            }
          
             {
               ListItems.map(role => (
-                <SidebarItem key={role.title} role={role} open={open} />
+                <SidebarItem key={role.title ? role.title :  Math.random() * 174183.6 / 32} role={role} open={open} />
               ))
             }
   
           </List>
           </Box>
-        </Drawer>
+        </DrawerDesktop>
 
       }
-
+  
 
         {/* Main */}
-      <Box className="scrollbar" component="main" sx={{ flexGrow: 1 , pt: "75px",pb:"5px" ,height: "100%" ,bgcolor:colors.grey[100]}}>
+      <Box className="scrollbar" component="main" sx={{ flexGrow: 1 ,pt: "75px",pb:"5px" ,height: "100%" ,bgcolor:colors.grey[100]}}>
 
           <Box sx={{px: "20px"}}>
             { children }
